@@ -161,7 +161,7 @@ class App extends React.Component {
       this.generateNumbers()
     }
   }
-  
+
   //Swipe Up Components
 
   swipeUp = (event) => {
@@ -187,43 +187,45 @@ class App extends React.Component {
   render() {
     const { arrays, score, bestScore } = this.state
     return (
-      <>
-      <div className="gamePanel">
-        <div className="gamePanel__scores">
-          <h1>2048</h1>
-          <h2>Score:{score}</h2>
-          <h3>Best Score:{bestScore}</h3>
+      
+      <div className="game">
+        <div className="gamePanel">
+          <div className="gamePanel__scores">
+            <h1>2048</h1>
+            <h2>Score:{score}</h2>
+            <h3>Best Score:{bestScore}</h3>
+          </div>
+        <button
+          type="button"
+          onClick={() => this.newGame()}
+          name="btn"
+          id="newGame"
+        >
+          New game
+        </button>
         </div>
-      <button
-        type="button"
-        onClick={() => this.newGame()}
-        name="btn"
-      >
-        New game
-      </button>
+        <div className="gameBlock">
+          <div className="gameBlock__item">{arrays[0][0]}</div>
+          <div className="gameBlock__item">{arrays[0][1]}</div>
+          <div className="gameBlock__item">{arrays[0][2]}</div>
+          <div className="gameBlock__item">{arrays[0][3]}</div>
+
+          <div className="gameBlock__item">{arrays[1][0]}</div>
+          <div className="gameBlock__item">{arrays[1][1]}</div>
+          <div className="gameBlock__item">{arrays[1][2]}</div>
+          <div className="gameBlock__item">{arrays[1][3]}</div>
+
+          <div className="gameBlock__item">{arrays[2][0]}</div>
+          <div className="gameBlock__item">{arrays[2][1]}</div>
+          <div className="gameBlock__item">{arrays[2][2]}</div>
+          <div className="gameBlock__item">{arrays[2][3]}</div>
+
+          <div className="gameBlock__item">{arrays[3][0]}</div>
+          <div className="gameBlock__item">{arrays[3][1]}</div>
+          <div className="gameBlock__item">{arrays[3][2]}</div>
+          <div className="gameBlock__item">{arrays[3][3]}</div>
+        </div>
       </div>
-      <div className="gameBlock">
-        <div className="gameBlock__item">{arrays[0][0]}</div>
-        <div className="gameBlock__item">{arrays[0][1]}</div>
-        <div className="gameBlock__item">{arrays[0][2]}</div>
-        <div className="gameBlock__item">{arrays[0][3]}</div>
-
-        <div className="gameBlock__item">{arrays[1][0]}</div>
-        <div className="gameBlock__item">{arrays[1][1]}</div>
-        <div className="gameBlock__item">{arrays[1][2]}</div>
-        <div className="gameBlock__item">{arrays[1][3]}</div>
-
-        <div className="gameBlock__item">{arrays[2][0]}</div>
-        <div className="gameBlock__item">{arrays[2][1]}</div>
-        <div className="gameBlock__item">{arrays[2][2]}</div>
-        <div className="gameBlock__item">{arrays[2][3]}</div>
-
-        <div className="gameBlock__item">{arrays[3][0]}</div>
-        <div className="gameBlock__item">{arrays[3][1]}</div>
-        <div className="gameBlock__item">{arrays[3][2]}</div>
-        <div className="gameBlock__item">{arrays[3][3]}</div>
-      </div>
-      </>
     )
   }
 }
