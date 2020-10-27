@@ -2,37 +2,51 @@
 import React from 'react'
 import './App.scss';
 
+  const newArrays = new Array(4).fill(new Array(4))
+  console.log(newArrays)
+
 class App extends React.Component {
   state = {
-    arrays: [[0,0,0,0],
-             [0,0,0,0],
-             [0,0,0,0],
-             [0,0,0,0],]
+    arrays: newArrays,
+    score: 0,
+    bestScore: 0,
   }
+
+  reset(){
+    this.refreshArray(newArrays)
+  }
+
+  newGame(){
+    this.setState(state => ({
+      bestScore: state.score > state.bestScore ? state.score : state.bestScore,
+      score: 0,
+    }))
+
+    this.refreshArray(newArrays)
+  }
+
+
 
   refreshArray(newArr) {
     this.setState(state => ({
-      ...state,
       arrays: newArr,
     }))
+    return newArr
   }
 
-  generateNumbers() {
+  
+
+  generateNumbers(arr) {
     let x = Math.floor(Math.random() * 4)
     let y = Math.floor(Math.random() * 4)
-    let z = [...this.state.arrays]
-    // if (z.every(c => c.every(c => c !== 0))){
-    //  alert('Game Over')
-    //  this.refreshArray([[0,0,0,0],
-    //                     [0,0,0,0],
-    //                     [0,0,0,0],
-    //                     [0,0,0,0],])
-    // }
+    let z = arr ? arr : this.state.arrays
 
-    if (z[x][y] === 0){
+    if (!z[x][y]){
       z[x][y] = 2
       this.refreshArray(z)
     } else this.generateNumbers()
+
+    return arr
   }
   
   componentDidMount() {
@@ -60,17 +74,20 @@ class App extends React.Component {
     let exitArray = []
 
     for (let i = 0; i < stateArray.length; i++){
-     let filterElements = stateArray[i].filter(elem => elem !== 0);
+     let filterElements = stateArray[i].filter(elem => elem);
      let additionDoneElements = []
      for (let m = 0; m < filterElements.length; m++){
         if (filterElements[m] === filterElements[m + 1]){
           additionDoneElements.push(filterElements[m] * 2)
+          this.setState(state => {
+            state.score += filterElements[m]
+          })
           m++
         } else {
           additionDoneElements.push(filterElements[m])
         }
      }
-     let emptyElements = new Array(4 - additionDoneElements.length).fill(0);
+     let emptyElements = new Array(4 - additionDoneElements.length);
 
      for (let n = 0; n < emptyElements.length; n++){
       additionDoneElements.push(emptyElements[n])
@@ -97,17 +114,20 @@ class App extends React.Component {
     let exitArray = [];
 
     for (let i = 0; i < stateArray.length; i++){
-     let filterElements = stateArray[i].filter(elem => elem !== 0);
+     let filterElements = stateArray[i].filter(elem => elem);
      let additionDoneElements = [];
      for (let m = 0; m < filterElements.length; m++){
         if (filterElements[m] === filterElements[m + 1]){
           additionDoneElements.push(filterElements[m] * 2)
+          this.setState(state => {
+            state.score += filterElements[m]
+          })
           m++
         } else {
           additionDoneElements.push(filterElements[m])
         }
      }
-     let emptyElements = new Array(4 - additionDoneElements.length).fill(0);
+     let emptyElements = new Array(4 - additionDoneElements.length);
 
      for (let n = 0; n < additionDoneElements.length; n++){
       emptyElements.push(additionDoneElements[n])
@@ -149,15 +169,18 @@ class App extends React.Component {
     let y = [one, two, tree, four]
     let res = []
      for (let j = 0; j < y.length; j++){
-       let filters = y[j].filter(a => a !== 0)
+       let filters = y[j].filter(a => a)
        let filtered = []
        for (let h = 0; h < filters.length; h++){
          if (filters[h] === filters[h+1]){
            filtered.push(filters[h] * 2)
+           this.setState(state => {
+            state.score += filters[h]
+          })
            h++
          } else filtered.push(filters[h])
        }
-       let z = new Array(4 - filtered.length).fill(0)
+       let z = new Array(4 - filtered.length)
   
        for (let y = 0; y < z.length; y++){
         filtered.push(z[y])
@@ -210,15 +233,18 @@ class App extends React.Component {
     let y = [one, two, tree, four]
     let res = []
      for (let j = 0; j < y.length; j++){
-       let filters = y[j].filter(a => a !== 0)
+       let filters = y[j].filter(a => a)
        let filtered = []
        for (let h = 0; h < filters.length; h++){
          if (filters[h] === filters[h+1]){
            filtered.push(filters[h] * 2)
+           this.setState(state => {
+            state.score += filters[h]
+          })
            h++
          } else filtered.push(filters[h])
        }
-       let z = new Array(4 - filtered.length).fill(0)
+       let z = new Array(4 - filtered.length)
   
        for (let y = 0; y < filtered.length; y++){
         z.push(filtered[y])
@@ -247,8 +273,23 @@ class App extends React.Component {
   //Rendering...
 
   render() {
-    const { arrays } = this.state
+    const { arrays, score, bestScore } = this.state
     return (
+      <>
+      <div className="gamePanel">
+        <div className="gamePanel__scores">
+          <h1>2048</h1>
+          <h2>Score:{score}</h2>
+          <h3>Best Score:{bestScore}</h3>
+        </div>
+      <button
+        type="button"
+        onClick={() => this.newGame()}
+        name="btn"
+      >
+        New game
+      </button>
+      </div>
       <div className="gameBlock">
         <div className="gameBlock__item">{arrays[0][0]}</div>
         <div className="gameBlock__item">{arrays[0][1]}</div>
@@ -269,8 +310,8 @@ class App extends React.Component {
         <div className="gameBlock__item">{arrays[3][1]}</div>
         <div className="gameBlock__item">{arrays[3][2]}</div>
         <div className="gameBlock__item">{arrays[3][3]}</div>
-        
       </div>
+      </>
     )
   }
 }
