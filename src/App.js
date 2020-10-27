@@ -3,6 +3,7 @@ import classNames from 'classnames'
 import './App.scss';
 
 const newArrays = new Array(4).fill(new Array(4))
+
 function classNameItem(item){
   return classNames("gameBlock__item", {
     "gameBlock__item--2": item === 2,
@@ -164,7 +165,10 @@ class App extends React.Component {
   swipeLeft = (event) => {
     if (event.code === 'KeyA'){
       this.horizontallySwipe('left')
-      this.generateNumbers()
+      setTimeout(() => {
+        this.generateNumbers()
+      }, 300)
+      
     }
   }
 
@@ -173,7 +177,9 @@ class App extends React.Component {
   swipeRight = (event) => {
     if (event.code === 'KeyD'){
       this.horizontallySwipe('right')
-      this.generateNumbers()
+      setTimeout(() => {
+        this.generateNumbers()
+      }, 300)
     }
   }
 
@@ -182,7 +188,9 @@ class App extends React.Component {
   swipeUp = (event) => {
     if (event.code === 'KeyW'){
       this.VerticalSwipe('up')
-      this.generateNumbers()
+      setTimeout(() => {
+        this.generateNumbers()
+      }, 300)
     }
   }
 
@@ -191,7 +199,9 @@ class App extends React.Component {
   swipeDown = (event) => {
     if (event.code === 'KeyS'){
       this.VerticalSwipe('down')
-      this.generateNumbers()
+      setTimeout(() => {
+        this.generateNumbers()
+      }, 300)
     }
   }
 
