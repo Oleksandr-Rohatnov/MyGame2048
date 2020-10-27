@@ -1,8 +1,23 @@
-
 import React from 'react'
+import classNames from 'classnames'
 import './App.scss';
 
 const newArrays = new Array(4).fill(new Array(4))
+function classNameItem(item){
+  return classNames("gameBlock__item", {
+    "gameBlock__item--2": item === 2,
+    "gameBlock__item--4": item === 4,
+    "gameBlock__item--8": item === 8,
+    "gameBlock__item--16": item === 16,
+    "gameBlock__item--32": item === 32,
+    "gameBlock__item--64": item === 64,
+    "gameBlock__item--128": item === 128,
+    "gameBlock__item--256": item === 256,
+    "gameBlock__item--512": item === 512,
+    "gameBlock__item--1024": item === 1024,
+    "gameBlock__item--2048": item === 2048,
+  })
+}
 
 function randomNumber (){
   return Math.floor(Math.random() * 4)
@@ -165,7 +180,6 @@ class App extends React.Component {
   //Swipe Up Components
 
   swipeUp = (event) => {
-
     if (event.code === 'KeyW'){
       this.VerticalSwipe('up')
       this.generateNumbers()
@@ -175,7 +189,6 @@ class App extends React.Component {
   //Swipe Down Components
 
   swipeDown = (event) => {
-
     if (event.code === 'KeyS'){
       this.VerticalSwipe('down')
       this.generateNumbers()
@@ -201,29 +214,29 @@ class App extends React.Component {
           name="btn"
           id="newGame"
         >
-          New game
+          NEW GAME
         </button>
         </div>
         <div className="gameBlock">
-          <div className="gameBlock__item">{arrays[0][0]}</div>
-          <div className="gameBlock__item">{arrays[0][1]}</div>
-          <div className="gameBlock__item">{arrays[0][2]}</div>
-          <div className="gameBlock__item">{arrays[0][3]}</div>
+          <div className={classNameItem(arrays[0][0])}>{arrays[0][0]}</div>
+          <div className={classNameItem(arrays[0][1])}>{arrays[0][1]}</div>
+          <div className={classNameItem(arrays[0][2])}>{arrays[0][2]}</div>
+          <div className={classNameItem(arrays[0][3])}>{arrays[0][3]}</div>
 
-          <div className="gameBlock__item">{arrays[1][0]}</div>
-          <div className="gameBlock__item">{arrays[1][1]}</div>
-          <div className="gameBlock__item">{arrays[1][2]}</div>
-          <div className="gameBlock__item">{arrays[1][3]}</div>
+          <div className={classNameItem(arrays[1][0])}>{arrays[1][0]}</div>
+          <div className={classNameItem(arrays[1][1])}>{arrays[1][1]}</div>
+          <div className={classNameItem(arrays[1][2])}>{arrays[1][2]}</div>
+          <div className={classNameItem(arrays[1][3])}>{arrays[1][3]}</div>
 
-          <div className="gameBlock__item">{arrays[2][0]}</div>
-          <div className="gameBlock__item">{arrays[2][1]}</div>
-          <div className="gameBlock__item">{arrays[2][2]}</div>
-          <div className="gameBlock__item">{arrays[2][3]}</div>
+          <div className={classNameItem(arrays[2][0])}>{arrays[2][0]}</div>
+          <div className={classNameItem(arrays[2][1])}>{arrays[2][1]}</div>
+          <div className={classNameItem(arrays[2][2])}>{arrays[2][2]}</div>
+          <div className={classNameItem(arrays[2][3])}>{arrays[2][3]}</div>
 
-          <div className="gameBlock__item">{arrays[3][0]}</div>
-          <div className="gameBlock__item">{arrays[3][1]}</div>
-          <div className="gameBlock__item">{arrays[3][2]}</div>
-          <div className="gameBlock__item">{arrays[3][3]}</div>
+          <div className={classNameItem(arrays[3][0])}>{arrays[3][0]}</div>
+          <div className={classNameItem(arrays[3][1])}>{arrays[3][1]}</div>
+          <div className={classNameItem(arrays[3][2])}>{arrays[3][2]}</div>
+          <div className={classNameItem(arrays[3][3])}>{arrays[3][3]}</div>
         </div>
       </div>
     )
