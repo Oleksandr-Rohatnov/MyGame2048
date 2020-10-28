@@ -1,8 +1,10 @@
 import React from 'react'
 import classNames from 'classnames'
 import './App.scss';
+// [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]]
 
 const newArrays = new Array(4).fill(new Array(4))
+// console.log(newArrays)
 
 function classNameItem(item){
   return classNames("gameBlock__item", {
@@ -24,6 +26,18 @@ function randomNumber (){
   return Math.floor(Math.random() * 4)
 }
 
+function generateNewField () {
+  let arrays = [...newArrays]
+  let arrayRandom = new Array(4)
+  let arrayRandom2 = new Array(4)
+  arrayRandom[randomNumber()] = 2
+  arrayRandom2[randomNumber()] = 2
+  arrays[randomNumber()] = arrayRandom
+  arrays[randomNumber()] = arrayRandom2
+  
+  return arrays
+}
+
 class App extends React.Component {
   state = {
     arrays: newArrays,
@@ -37,7 +51,7 @@ class App extends React.Component {
     })
   }
 
-  generateNumbers() {
+  generateNumbers = () => {
     let x = randomNumber()
     let y = randomNumber()
     let z = this.state.arrays
@@ -59,11 +73,12 @@ class App extends React.Component {
 
   newGame(){
     this.setState(({score, bestScore}) => ({
+      arrays: generateNewField(),
       bestScore: score > bestScore ? score : bestScore,
       score: 0,
     }))
 
-    this.refreshArray(new Array(4).fill(new Array(4)))
+    
   }
 
   //SwipesFunctions
