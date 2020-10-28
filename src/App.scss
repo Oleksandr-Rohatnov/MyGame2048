@@ -41,6 +41,7 @@ body {
       outline-style: none;
       cursor: pointer;
       font-size: 20px;
+      font-weight: bold;
       width: 150px;
       height: 50px;
       position: absolute;
@@ -50,10 +51,12 @@ body {
       border-radius: 15px;
       box-shadow: 1px 1px 10px 1px  #fff;
       color: rgb(202, 202, 202);
-      transition: box-shadow 0.5s;
+      transition: 0.5s;
+      border: none;
 
       &:hover {
         box-shadow: 1px 1px 20px 1px  #fff;
+        transform: scale(1.1);
       }
     }
   }
@@ -89,7 +92,7 @@ body {
       justify-content: center;
       font-size: 40px;
       color: #fff;
-      transition: background-color 0.5s ease-out 0.5s;
+      transition: background-color 0.3s ease-out 0.3s;
       border-radius: 10px;
       
 

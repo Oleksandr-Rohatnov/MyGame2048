@@ -32,10 +32,9 @@ class App extends React.Component {
   }
 
   refreshArray(newArr) {
-    this.setState(({
+    this.setState({
       arrays: newArr,
-    }))
-    return newArr
+    })
   }
 
   generateNumbers() {
@@ -50,21 +49,21 @@ class App extends React.Component {
   }
   
   componentDidMount() {
-    document.addEventListener('keypress', this.swipeLeft)
-    document.addEventListener('keypress', this.swipeRight)
-    document.addEventListener('keypress', this.swipeUp)
-    document.addEventListener('keypress', this.swipeDown)
+    document.addEventListener('keydown', this.swipeLeft)
+    document.addEventListener('keydown', this.swipeRight)
+    document.addEventListener('keydown', this.swipeUp)
+    document.addEventListener('keydown', this.swipeDown)
   }
   
   //Game Panel
 
   newGame(){
-    this.setState(state => ({
-      bestScore: state.score > state.bestScore ? state.score : state.bestScore,
+    this.setState(({score, bestScore}) => ({
+      bestScore: score > bestScore ? score : bestScore,
       score: 0,
     }))
 
-    this.refreshArray(newArrays)
+    this.refreshArray(new Array(4).fill(new Array(4)))
   }
 
   //SwipesFunctions
@@ -163,7 +162,7 @@ class App extends React.Component {
   //Swipe Left Components
 
   swipeLeft = (event) => {
-    if (event.code === 'KeyA'){
+    if (event.code === 'ArrowLeft'){
       this.horizontallySwipe('left')
       setTimeout(() => {
         this.generateNumbers()
@@ -175,7 +174,7 @@ class App extends React.Component {
   //Swipe Right Components
 
   swipeRight = (event) => {
-    if (event.code === 'KeyD'){
+    if (event.code === 'ArrowRight'){
       this.horizontallySwipe('right')
       setTimeout(() => {
         this.generateNumbers()
@@ -186,7 +185,7 @@ class App extends React.Component {
   //Swipe Up Components
 
   swipeUp = (event) => {
-    if (event.code === 'KeyW'){
+    if (event.code === 'ArrowUp'){
       this.VerticalSwipe('up')
       setTimeout(() => {
         this.generateNumbers()
@@ -197,7 +196,7 @@ class App extends React.Component {
   //Swipe Down Components
 
   swipeDown = (event) => {
-    if (event.code === 'KeyS'){
+    if (event.code === 'ArrowDown'){
       this.VerticalSwipe('down')
       setTimeout(() => {
         this.generateNumbers()
