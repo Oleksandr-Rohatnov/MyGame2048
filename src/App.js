@@ -1,35 +1,8 @@
 import React from 'react'
 import classNames from 'classnames'
 import './App.scss';
-// [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]]
 
 const newArrays = new Array(4).fill(new Array(4))
-// console.log(newArrays)
-
-function arrayCheck (arr, arr2) {
-  let count = 0;
-  if (!arr2) {
-    for (let i = 0; i < arr.length; i++){
-      for (let j = 0; j < arr.length; j++){
-        if (arr[i][j]) {
-          count++
-        }
-      }
-    }
-    return count === 16 ? false : true;
-  } else {
-    let result = true
-    for (let i = 0; i < arr.length; i++){
-      for (let j = 0; j < arr.length; j++){
-        if (arr[i][j] !== arr2[i][j]) {
-          result = false;
-        }
-      }
-    }
-    // console.log(result)
-    return result;
-  }
-}
 
 function classNameItem(item){
   return classNames("gameBlock__item", {
@@ -69,6 +42,36 @@ class App extends React.Component {
     score: 0,
     bestScore: 0,
     gameStatus: true,
+    winStatus: false,
+  }
+
+  arrayGameOverCheck = (arr, arr2) => {
+    let count = 0;
+    if (!arr2) {
+      for (let i = 0; i < arr.length; i++){
+        for (let j = 0; j < arr.length; j++){
+          if (arr[i][j]) {
+            count++
+          }
+        }
+      }
+      return count === 16 ? false : true;
+    } else {
+      let result = true
+      for (let i = 0; i < arr.length; i++){
+        for (let j = 0; j < arr.length; j++){
+          if (arr[i][j] !== arr2[i][j]) {
+            result = false;
+          }
+        }
+      }
+      // console.log(result)
+      return result;
+    }
+  }
+
+  winCheck = (arr) => {
+    return arr.some(x => x.some(y => y === 2048))
   }
 
   refreshArray(newArr) {
@@ -106,6 +109,7 @@ class App extends React.Component {
       bestScore: score > bestScore ? score : bestScore,
       score: 0,
       gameStatus: true,
+      winStatus: false,
     }))
 
     
@@ -146,15 +150,21 @@ class App extends React.Component {
       }
     }
 
+    if (this.winCheck(exitArray)) {
+      this.setState({
+        winStatus: true
+      })
+    }
 
-    if (!arrayCheck(exitArray, stateArray)) {
+
+    if (!this.arrayGameOverCheck(exitArray, stateArray)) {
       this.refreshArray(exitArray)
       setTimeout(() => {
         this.generateNumbers(this.state.arrays)
       },300)
     }
       
-    return arrayCheck(exitArray)
+    return this.arrayGameOverCheck(exitArray)
 
   
   }
@@ -211,14 +221,20 @@ class App extends React.Component {
         exitArrays.push(r)
       }
 
-      if (!arrayCheck(exitArrays, stateArray)) {
+      if (this.winCheck(exitArrays)) {
+        this.setState({
+          winStatus: true
+        })
+      }
+
+      if (!this.arrayGameOverCheck(exitArrays, stateArray)) {
         this.refreshArray(exitArrays)
         setTimeout(() => {
           this.generateNumbers(this.state.arrays)
         },300)
       }
 
-      return arrayCheck(exitArrays)
+      return this.arrayGameOverCheck(exitArrays)
   }
 
   //Swipe Left Components
@@ -227,7 +243,7 @@ class App extends React.Component {
     if (event.code === 'ArrowLeft'){
       this.horizontallySwipe('left')
 
-      // this.setState({gameStatus: this.horizontallySwipe('left')})
+      this.setState({gameStatus: this.horizontallySwipe('left')})
     }
   }
 
@@ -236,7 +252,7 @@ class App extends React.Component {
   swipeRight = (event) => {
     if (event.code === 'ArrowRight'){
       this.horizontallySwipe('right')
-      // this.setState({gameStatus: this.horizontallySwipe('right')})
+      this.setState({gameStatus: this.horizontallySwipe('right')})
     }
   }
 
@@ -245,7 +261,7 @@ class App extends React.Component {
   swipeUp = (event) => {
     if (event.code === 'ArrowUp'){
       this.VerticalSwipe('up')
-      // this.setState({gameStatus: this.VerticalSwipe('up')})
+      this.setState({gameStatus: this.VerticalSwipe('up')})
     }
   }
 
@@ -254,14 +270,14 @@ class App extends React.Component {
   swipeDown = (event) => {
     if (event.code === 'ArrowDown'){
       this.VerticalSwipe('down')
-      // this.setState({gameStatus: this.VerticalSwipe('down')})
+      this.setState({gameStatus: this.VerticalSwipe('down')})
     }
   }
 
   //Rendering...
 
   render() {
-    const { arrays, score, bestScore, gameStatus } = this.state
+    const { arrays, score, bestScore, gameStatus, winStatus } = this.state
     return (
       
       <div className="game">
@@ -301,6 +317,7 @@ class App extends React.Component {
           <div className={classNameItem(arrays[3][2])}>{arrays[3][2]}</div>
           <div className={classNameItem(arrays[3][3])}>{arrays[3][3]}</div>
           <div className={classNames('gameOver',{'gameOver--hidden': gameStatus})}>Game Over</div>
+          <div className={classNames('win',{'win--hidden': !winStatus})}>You win!!!</div>
         </div>
       </div>
     )
