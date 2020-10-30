@@ -45,7 +45,7 @@ class App extends React.Component {
     winStatus: false,
   }
 
-  arrayGameOverCheck = (arr, arr2) => {
+  arrayCheck = (arr, arr2) => {
     let count = 0;
     if (!arr2) {
       for (let i = 0; i < arr.length; i++){
@@ -157,14 +157,14 @@ class App extends React.Component {
     }
 
 
-    if (!this.arrayGameOverCheck(exitArray, stateArray)) {
+    if (!this.arrayCheck(exitArray, stateArray)) {
       this.refreshArray(exitArray)
       setTimeout(() => {
         this.generateNumbers(this.state.arrays)
       },300)
     }
       
-    return this.arrayGameOverCheck(exitArray)
+    return this.arrayCheck(exitArray)
 
   
   }
@@ -227,14 +227,14 @@ class App extends React.Component {
         })
       }
 
-      if (!this.arrayGameOverCheck(exitArrays, stateArray)) {
+      if (!this.arrayCheck(exitArrays, stateArray)) {
         this.refreshArray(exitArrays)
         setTimeout(() => {
           this.generateNumbers(this.state.arrays)
         },300)
       }
 
-      return this.arrayGameOverCheck(exitArrays)
+      return this.arrayCheck(exitArrays)
   }
 
   //Swipe Left Components
