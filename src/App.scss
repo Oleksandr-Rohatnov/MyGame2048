@@ -69,6 +69,7 @@ body {
     border-radius: 15px;
     padding: 15px;
     position: relative;
+    z-index: 1;
 
     &::after {
       content: '';
@@ -128,6 +129,25 @@ body {
       }
       &--2048 {
         background-color: rgb(10, 14, 156);
+      }
+    }
+
+    .gameOver {
+      font-size: 50px;
+      color: rgb(255, 255, 255);
+      text-shadow: 2px 2px 20px rgb(0, 0, 0);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: absolute;
+      z-index: 3;
+      width: 400px;
+      height: 400px;
+      background-color: rgba(30, 27, 61, 0.911);
+      transition: background-color 0.3s ease-out 0.3s;
+
+      &--hidden {
+        visibility: hidden;
       }
     }
   }

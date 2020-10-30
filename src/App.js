@@ -6,6 +6,31 @@ import './App.scss';
 const newArrays = new Array(4).fill(new Array(4))
 // console.log(newArrays)
 
+function arrayCheck (arr, arr2) {
+  let count = 0;
+  if (!arr2) {
+    for (let i = 0; i < arr.length; i++){
+      for (let j = 0; j < arr.length; j++){
+        if (arr[i][j]) {
+          count++
+        }
+      }
+    }
+    return count === 16 ? false : true;
+  } else {
+    let result = true
+    for (let i = 0; i < arr.length; i++){
+      for (let j = 0; j < arr.length; j++){
+        if (arr[i][j] !== arr2[i][j]) {
+          result = false;
+        }
+      }
+    }
+    // console.log(result)
+    return result;
+  }
+}
+
 function classNameItem(item){
   return classNames("gameBlock__item", {
     "gameBlock__item--2": item === 2,
@@ -40,26 +65,30 @@ function generateNewField () {
 
 class App extends React.Component {
   state = {
-    arrays: newArrays,
+    arrays: generateNewField(),
     score: 0,
     bestScore: 0,
+    gameStatus: true,
   }
 
   refreshArray(newArr) {
     this.setState({
       arrays: newArr,
     })
+
+    console.log('refresh')
   }
 
-  generateNumbers = () => {
-    let x = randomNumber()
-    let y = randomNumber()
-    let z = this.state.arrays
+  generateNumbers = (arr) => {
+    let x = randomNumber();
+    let y = randomNumber();
+    let z = arr;
 
     if (!z[x][y]){
       z[x][y] = 2
       this.refreshArray(z)
-    } else this.generateNumbers()
+    } else this.generateNumbers(z)
+    console.log('generate')
   }
   
   componentDidMount() {
@@ -68,7 +97,7 @@ class App extends React.Component {
     document.addEventListener('keydown', this.swipeUp)
     document.addEventListener('keydown', this.swipeDown)
   }
-  
+
   //Game Panel
 
   newGame(){
@@ -76,6 +105,7 @@ class App extends React.Component {
       arrays: generateNewField(),
       bestScore: score > bestScore ? score : bestScore,
       score: 0,
+      gameStatus: true,
     }))
 
     
@@ -115,8 +145,18 @@ class App extends React.Component {
        exitArray.push(emptyElements)
       }
     }
+
+
+    if (!arrayCheck(exitArray, stateArray)) {
+      this.refreshArray(exitArray)
+      setTimeout(() => {
+        this.generateNumbers(this.state.arrays)
+      },300)
+    }
+      
+    return arrayCheck(exitArray)
+
   
-    this.refreshArray(exitArray)
   }
 
   VerticalSwipe(swipe) {
@@ -171,7 +211,14 @@ class App extends React.Component {
         exitArrays.push(r)
       }
 
-      this.refreshArray(exitArrays)
+      if (!arrayCheck(exitArrays, stateArray)) {
+        this.refreshArray(exitArrays)
+        setTimeout(() => {
+          this.generateNumbers(this.state.arrays)
+        },300)
+      }
+
+      return arrayCheck(exitArrays)
   }
 
   //Swipe Left Components
@@ -179,10 +226,8 @@ class App extends React.Component {
   swipeLeft = (event) => {
     if (event.code === 'ArrowLeft'){
       this.horizontallySwipe('left')
-      setTimeout(() => {
-        this.generateNumbers()
-      }, 300)
-      
+
+      // this.setState({gameStatus: this.horizontallySwipe('left')})
     }
   }
 
@@ -191,9 +236,7 @@ class App extends React.Component {
   swipeRight = (event) => {
     if (event.code === 'ArrowRight'){
       this.horizontallySwipe('right')
-      setTimeout(() => {
-        this.generateNumbers()
-      }, 300)
+      // this.setState({gameStatus: this.horizontallySwipe('right')})
     }
   }
 
@@ -202,9 +245,7 @@ class App extends React.Component {
   swipeUp = (event) => {
     if (event.code === 'ArrowUp'){
       this.VerticalSwipe('up')
-      setTimeout(() => {
-        this.generateNumbers()
-      }, 300)
+      // this.setState({gameStatus: this.VerticalSwipe('up')})
     }
   }
 
@@ -213,16 +254,14 @@ class App extends React.Component {
   swipeDown = (event) => {
     if (event.code === 'ArrowDown'){
       this.VerticalSwipe('down')
-      setTimeout(() => {
-        this.generateNumbers()
-      }, 300)
+      // this.setState({gameStatus: this.VerticalSwipe('down')})
     }
   }
 
   //Rendering...
 
   render() {
-    const { arrays, score, bestScore } = this.state
+    const { arrays, score, bestScore, gameStatus } = this.state
     return (
       
       <div className="game">
@@ -261,6 +300,7 @@ class App extends React.Component {
           <div className={classNameItem(arrays[3][1])}>{arrays[3][1]}</div>
           <div className={classNameItem(arrays[3][2])}>{arrays[3][2]}</div>
           <div className={classNameItem(arrays[3][3])}>{arrays[3][3]}</div>
+          <div className={classNames('gameOver',{'gameOver--hidden': gameStatus})}>Game Over</div>
         </div>
       </div>
     )
