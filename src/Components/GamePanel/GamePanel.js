@@ -1,5 +1,5 @@
 import React from 'react'
-
+import PropTypes from 'prop-types';
 
 export const GamePanel = ({score, bestScore, newGameFunction}) => (
   <div className="gamePanel">
@@ -18,3 +18,9 @@ export const GamePanel = ({score, bestScore, newGameFunction}) => (
     </button>
   </div>
 )
+
+GamePanel.propTypes = {
+  score: PropTypes.number.isRequired,
+  bestScore: PropTypes.number.isRequired,
+  newGameFunction: PropTypes.func.isRequired,
+}

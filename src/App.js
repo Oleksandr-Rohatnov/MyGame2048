@@ -120,7 +120,7 @@ class App extends React.Component {
       if (swipe === 'up') {
         for (let i = 0; i < emptyArray.length; i++){
         filtered.push(emptyArray[i])
-        };
+        }
 
         rotateBackArrays.push(filtered)
       } else {
@@ -138,20 +138,20 @@ class App extends React.Component {
       }
 
       exitArrays.push(rotateSomeArray)
-    };
+    }
 
     if (winCheck(exitArrays)) {
       this.setState({
         winStatus: true
       })
-    };
+    }
 
     if (!arrayCheck(exitArrays, stateArray)) {
       this.refreshArray(exitArrays)
       setTimeout(() => {
         generateNumbers(this.state.arrays, this.refreshArray)
       },300)
-    };
+    }
 
     return arrayCheck(exitArrays)
   }

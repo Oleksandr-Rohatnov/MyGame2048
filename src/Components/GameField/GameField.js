@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types';
 import classNames from 'classnames'
 import { classNameItem } from '../ServiceComponents/ServiceComponents'
 
@@ -26,4 +27,10 @@ export const GameField = ({arrays, gameStatus, winStatus}) => (
     <div className={classNames('gameOver',{'gameOver--hidden': gameStatus})}>Game Over</div>
     <div className={classNames('win',{'win--hidden': !winStatus})}>You win!!!</div>
   </div>
-)
+);
+
+GameField.propTypes = {
+  arrays: PropTypes.arrayOf(PropTypes.array.isRequired).isRequired,
+  gameStatus: PropTypes.func.isRequired,
+  winStatus: PropTypes.func.isRequired,
+}
