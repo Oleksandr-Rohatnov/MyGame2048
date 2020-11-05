@@ -21,7 +21,7 @@ body {
       color: white;
       width: 100px;
       height: 100px;
-      background-image: url('./1.png');
+      background-image: url('./Arrows.png');
       background-position: left;
       background-size: contain;
       position: absolute;
@@ -65,13 +65,13 @@ body {
       right: 0;
       background-color: transparent;
       border-radius: 15px;
-      box-shadow: 1px 1px 10px 1px  #fff;
+      box-shadow: 1px 1px 5px 1px  #fff;
       color: rgb(202, 202, 202);
       transition: 0.5s;
       border: none;
 
       &:hover {
-        box-shadow: 1px 1px 20px 1px  #fff;
+        box-shadow: 1px 1px 15px 1px  #fff;
         transform: scale(1.1);
       }
     }
@@ -81,18 +81,27 @@ body {
     height: 400px;
     display: flex;
     flex-wrap: wrap;
-    box-shadow: 2px 2px 25px 1px  #fff;
+    box-shadow: 1px 1px 20px 1px  rgb(211, 211, 211);
     border-radius: 15px;
     padding: 15px;
     position: relative;
     z-index: 1;
+
+    &__howToPlay {
+      color: rgb(170, 169, 169);
+      text-shadow: 1px 1px 20px rgb(140, 141, 153);
+      position: absolute;
+      right: -250px;
+      width: 200px;
+      top: 0;
+    }
     
     &__item {
       display: flex;
       width: 100px;
       height: 100px;
       box-sizing: border-box;
-      border: 2.5px solid rgb(216, 216, 216);
+      border: 2.5px solid rgb(168, 168, 168);
       align-items: center;
       justify-content: center;
       font-size: 40px;

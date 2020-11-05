@@ -26,6 +26,7 @@ export const GameField = ({arrays, gameStatus, winStatus}) => (
     <div className={classNameItem(arrays[3][3])}>{arrays[3][3]}</div>
     <div className={classNames('gameOver',{'gameOver--hidden': gameStatus})}>Game Over</div>
     <div className={classNames('win',{'win--hidden': !winStatus})}>You win!!!</div>
+    <p className="gameBlock__howToPlay">HOW TO PLAY: Use your arrow keys to move the tiles. Tiles with the same number merge into one when they touch. Add them up to reach 2048!</p>
   </div>
 );
 
